@@ -13,7 +13,7 @@ import torch.optim as optim
 import tyro
 from stable_baselines3.common.buffers import ReplayBuffer
 from torch.utils.tensorboard import SummaryWriter
-
+os.environ["MUJOCO_GL"] = "osmesa"  # Sử dụng backend Mesa
 
 @dataclass
 class Args:
