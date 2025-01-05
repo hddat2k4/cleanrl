@@ -13,8 +13,8 @@ import torch.optim as optim
 import tyro
 from stable_baselines3.common.buffers import ReplayBuffer
 from torch.utils.tensorboard import SummaryWriter
-# import os
-# os.environ["MUJOCO_GL"] = "osmesa"  # Sử dụng backend Mesa
+import os
+os.environ["MUJOCO_GL"] = "osmesa"  # Sử dụng backend Mesa
 
 @dataclass
 class Args:
@@ -44,6 +44,7 @@ class Args:
     # Algorithm specific arguments
     env_id: str = "HalfCheetah-v4"
     """the environment id of the Atari game"""
+
     total_timesteps: int = 2000000
     """total timesteps of the experiments"""
     learning_rate: float = 3e-4
