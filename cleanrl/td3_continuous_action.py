@@ -13,8 +13,8 @@ import torch.optim as optim
 import tyro
 from stable_baselines3.common.buffers import ReplayBuffer
 from torch.utils.tensorboard import SummaryWriter
-import os
-os.environ["MUJOCO_GL"] = "osmesa"  # Sử dụng backend Mesa
+# import os
+# os.environ["MUJOCO_GL"] = "osmesa"  # Sử dụng backend Mesa
 
 @dataclass
 class Args:
@@ -186,7 +186,7 @@ poetry run pip install "stable_baselines3==2.0.0a1"
 
     # TRY NOT TO MODIFY: start the game
     obs, _ = envs.reset(seed=args.seed)
-    obs = obs.astype(np.float32) 
+    # obs = obs.astype(np.float32) 
     for global_step in range(args.total_timesteps):
         # ALGO LOGIC: put action logic here
         if global_step < args.learning_starts:
@@ -199,7 +199,7 @@ poetry run pip install "stable_baselines3==2.0.0a1"
 
         # TRY NOT TO MODIFY: execute the game and log data.
         next_obs, rewards, terminations, truncations, infos = envs.step(actions)
-        next_obs = next_obs.astype(np.float32) 
+        # next_obs = next_obs.astype(np.float32) 
         # TRY NOT TO MODIFY: record rewards for plotting purposes
         if "final_info" in infos:
             for info in infos["final_info"]:
