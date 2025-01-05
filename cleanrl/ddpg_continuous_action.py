@@ -13,7 +13,8 @@ import torch.optim as optim
 import tyro
 from stable_baselines3.common.buffers import ReplayBuffer
 from torch.utils.tensorboard import SummaryWriter
-
+# import os
+# os.environ["MUJOCO_GL"] = "osmesa"  # Sử dụng backend Mesa
 
 @dataclass
 class Args:
@@ -41,13 +42,13 @@ class Args:
     """the user or org name of the model repository from the Hugging Face Hub"""
 
     # Algorithm specific arguments
-    env_id: str = "Hopper-v4"
+    env_id: str = "HalfCheetah-v4"
     """the environment id of the Atari game"""
-    total_timesteps: int = 1000000
+    total_timesteps: int = 2000000
     """total timesteps of the experiments"""
     learning_rate: float = 3e-4
     """the learning rate of the optimizer"""
-    buffer_size: int = int(1e6)
+    buffer_size: int = 800000
     """the replay memory buffer size"""
     gamma: float = 0.99
     """the discount factor gamma"""
@@ -178,6 +179,8 @@ poetry run pip install "stable_baselines3==2.0.0a1"
 
     # TRY NOT TO MODIFY: start the game
     obs, _ = envs.reset(seed=args.seed)
+    obs = obs.astype(np.float32)
+
     for global_step in range(args.total_timesteps):
         # ALGO LOGIC: put action logic here
         if global_step < args.learning_starts:
@@ -190,7 +193,7 @@ poetry run pip install "stable_baselines3==2.0.0a1"
 
         # TRY NOT TO MODIFY: execute the game and log data.
         next_obs, rewards, terminations, truncations, infos = envs.step(actions)
-
+        next_obs = next_obs.astype(np.float32) 
         # TRY NOT TO MODIFY: record rewards for plotting purposes
         if "final_info" in infos:
             for info in infos["final_info"]:
